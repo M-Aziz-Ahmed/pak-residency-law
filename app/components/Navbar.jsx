@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
     const links = [
         {name:'Home', link:'/portfollio'},
-        {name:'Home2', link:'/'},
-        {name:'Home3', link:'/'},
-        {name:'Home4', link:'/'},
-        {name:'Home5', link:'/'},
+        {name:'AI-Chat', link:'/'},
+        {name:'Scan Deed', link:'/'},
+        {name:'Law Search', link:'/'},
+        {name:'Land Advisors', link:'/'},
     ]
     const path = usePathname()
     return (
