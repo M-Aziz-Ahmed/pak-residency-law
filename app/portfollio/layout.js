@@ -1,3 +1,4 @@
+import Navbar from "../components/Navbar";
 import "./globals.css";
 
 export const metadata = {
@@ -11,7 +12,7 @@ export default function RootLayout({ children }) {
       <body
         className={``}
       >
-        Portfolio Layout
+        <Navbar/>
         {children}
       </body>
     </html>
