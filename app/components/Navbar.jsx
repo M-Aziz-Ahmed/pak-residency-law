@@ -15,7 +15,7 @@ const Navbar = () => {
         <>
         <div className="flex justify-around items-center bg-white text-gray-400 py-7">
             <div className="flex gap-2">
-                <div className="logo rotate-6">Logo</div>
+                <div className="logo rotate-7"><img src="/navlogo.png" alt="Logo" /></div>
                 <div className="text-2xl font-extrabold text-green-700">PakResidencyLaw</div>
             </div>
             <div className="flex gap-15 items-center">
