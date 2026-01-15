@@ -20,8 +20,8 @@ export default () => {
                  <p className="text-gray-600">Urdu or English.Analyze deeds,identify risks and </p>
                   <p className="text-gray-600">connect with experts instantly.</p>
                   <div className="btn flex py-5 px-3 gap-4">
-                <button className="btn1 bg-green-400 font-weight:900 rounded-md px-4 py-3">Ask AI Question</button>
-                 <button className="btn2 bg-green-400 font-weight:900 rounded-md px-4 py-3">Scan Property Papers</button>
+                <button className="btn1 bg-green-700 font-weight:900 rounded-md px-4 py-3">Ask AI Question</button>
+                 <button className="btn2 bg-green-700 font-weight:900 rounded-md px-4 py-3">Scan Property Papers</button>
                  </div>
                 </div>       
             </div>

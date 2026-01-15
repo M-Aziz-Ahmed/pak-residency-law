@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 const Navbar = () => {
     const links = [
         {name:'Home', link:'/portfollio'},
-        {name:'AI-Chat', link:'/'},
+        {name:'AI-Chat', link:'/portfollio/AiChat'},
         {name:'Scan Deed', link:'/'},
         {name:'Law Search', link:'/'},
         {name:'Land Advisors', link:'/'},
