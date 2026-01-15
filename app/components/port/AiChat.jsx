@@ -12,7 +12,7 @@ export default function AiChat() {
                  <img src="/message.png" alt="icon message" className="py-5 w-15 h-20 items-center justify-center"/>
                 </div>
                 <div className="footer">
-
+<h1>Disclaimer</h1>
                 </div>
             </div>
         </div>
