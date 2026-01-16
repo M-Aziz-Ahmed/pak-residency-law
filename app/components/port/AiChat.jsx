@@ -21,6 +21,6 @@ export default function AiChat() {
                  <button className="bg-green-700 text-white p-2 rounded ml-2">Send</button>
                 </div>
             </div>
-        </div>
+        </div> 
     );
 }

@@ -7,8 +7,8 @@ const Navbar = () => {
         {name:'Home', link:'/portfollio'},
         {name:'AI-Chat', link:'/portfollio/AiChat'},
         {name:'Scan Deed', link:'/portfollio/ScanDeed'},
-        {name:'Law Search', link:'/'},
-        {name:'Land Advisors', link:'/'},
+        {name:'Law Search', link:'/portfollio/Law-search'},
+        {name:'Land Advisors', link:'/portfollio/Lawyers'},
     ]
     const path = usePathname()
     return (
