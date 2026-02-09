@@ -3,10 +3,8 @@ import TopSection from "../components/port/TopSection";
 
 export default function Home() {
   return (
- <>
- <TopSection>
-  
- </TopSection>
- </>
+    <>
+      <TopSection />
+    </>
   );
 }
