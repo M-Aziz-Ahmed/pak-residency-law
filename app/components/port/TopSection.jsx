@@ -1,11 +1,4 @@
-export default function TopSection() {
-    const features = [
-        "AI-based Law Simplification",
-        "OCR Document Analysis",
-        "Urdu & Roman Urdu Support",
-        "Consultation with Experts"
-    ];
-
+export default () => {
     return (
         <section
             style={{
@@ -14,62 +7,34 @@ export default function TopSection() {
                 backgroundPosition: "center",
                 minHeight: "100vh",
             }}
-            className="relative flex items-center justify-center">
-            <div className="absolute inset-0 bg-black/40"></div>
-            <div className="relative z-10 w-full max-w-7xl mx-auto px-8 py-16 grid md:grid-cols-2 gap-12 items-center">
-                <div className="text-white space-y-6">
-                    <h1 className="text-5xl md:text-6xl font-bold leading-tight">
-                        Smart Legal help<br />
-                        for<br />
-                        <span className="text-green-400">property disputes</span>
-                    </h1>
-
-                    <p className="text-gray-300 text-lg leading-relaxed">
-                        Navigate complex residential laws in Urdu, Roman Urdu or English.
-                        Analyze deeds, identify risks and connect with experts instantly.
-                    </p>
-
-                    <div className="flex flex-wrap gap-4 pt-4">
-                        <button className="bg-green-700 hover:bg-green-600 text-white font-semibold rounded-lg px-6 py-3 transition-colors">
-                            Ask AI Question
-                        </button>
-                        <button className="bg-green-700 hover:bg-green-600 text-white font-semibold rounded-lg px-6 py-3 transition-colors">
-                            Scan Property Papers
-                        </button>
+        >
+            <div className="bg-black opacity-25 absolute h-[100vh] w-[99vw]"></div>
+            <div className="page1 flex justify-around items-center relative z-[10] top-20">
+                <div className="portion1 flex bg-light">
+                    <div className="textsection py-10 px-15 font-bold">
+                        <h1 className="text-5xl">Smart Legal help</h1>
+                        <h1 className="text-5xl">for</h1>
+                        <h1 className="text-5xl text-green-400">property disputes</h1>
+                        <br></br>
+                        <p className="text-gray-600 ">Navigate complex residential laws in Urdu,Roman</p>
+                        <p className="text-gray-600">Urdu or English.Analyze deeds,identify risks and </p>
+                        <p className="text-gray-600">Urdu or English.Analyze deeds,identify risks and </p>
+                        <p className="text-gray-600">connect with experts instantly.</p>
+                        <div className="btn flex py-5 px-3 gap-4">
+                            <button className="btn1 bg-green-700 font-weight:900 rounded-md px-4 py-3">Ask AI Question</button>
+                            <button className="btn2 bg-green-700 font-weight:900 rounded-md px-4 py-3">Scan Property Papers</button>
+                        </div>
                     </div>
                 </div>
+                <div className="portion2">
+                    <div className="div px-25 py-10 border-2 m-6 backdrop-blur-md shadow-2xl rounded-2xl">
+                        <h2 className="font-bold">Secure Your Assets</h2>
+                        <br></br>
+                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">Ai-based law simplification</p>
+                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">OCR document analysis</p>
+                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">Urdu and Roman Urdu support</p>
+                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">Consultation with Experts</p>
 
-                <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 shadow-2xl border border-white/20">
-                    <h2 className="text-4xl font-bold text-white mb-8">
-                        Secure Your Assets
-                    </h2>
-
-                    <div className="space-y-6">
-                        {features.map((feature, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center gap-4 bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10"
-                            >
-                                <div className="flex-shrink-0 w-10 h-10 bg-green-500/30 rounded-lg flex items-center justify-center rounded-pill">
-                                    <svg
-                                        className="w-5 h-5 text-green-400 rounded-pill"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        viewBox="0 0 24 24"
-                                    >
-                                        <path
-                                            strokeLinecap="round"
-                                            strokeLinejoin="round"
-                                            strokeWidth={3}
-                                            d="M5 13l4 4L19 7"
-                                        />
-                                    </svg>
-                                </div>
-                                <span className="text-xl text-white/90 font-light">
-                                    {feature}
-                                </span>
-                            </div>
-                        ))}
                     </div>
                 </div>
             </div>
