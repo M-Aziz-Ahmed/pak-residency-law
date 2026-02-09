@@ -1,4 +1,10 @@
 export default () => {
+    const features = [
+        'Ai-based law simplification',
+        'OCR document analysis',
+        'Urdu and Roman Urdu support',
+        'Consultation with Experts',
+    ]
     return (
         <section
             style={{
@@ -30,11 +36,9 @@ export default () => {
                     <div className="div px-25 py-10 border-2 m-6 backdrop-blur-md shadow-2xl rounded-2xl">
                         <h2 className="font-bold">Secure Your Assets</h2>
                         <br></br>
-                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">Ai-based law simplification</p>
-                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">OCR document analysis</p>
-                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">Urdu and Roman Urdu support</p>
-                        <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg">Consultation with Experts</p>
-
+                        {features.map((feature, index) => (
+                            <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg" key={index}>{feature}</p>
+                        ))}
                     </div>
                 </div>
             </div>
