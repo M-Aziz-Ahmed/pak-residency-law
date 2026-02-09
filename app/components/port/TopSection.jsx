@@ -33,11 +33,11 @@ export default () => {
                     </div>
                 </div>
                 <div className="portion2">
-                    <div className="div px-25 py-10 border-2 m-6 backdrop-blur-md shadow-2xl rounded-2xl">
+                    <div className="div px-25 py-10 border-2 m-6 backdrop-blur-sm shadow-2xl rounded-2xl">
                         <h2 className="font-bold">Secure Your Assets</h2>
                         <br></br>
                         {features.map((feature, index) => (
-                            <p className="py-2 px-25 border-2 m-3 backdrop-blur-md shadow-lg rounded-lg" key={index}>{feature}</p>
+                            <p className="py-2 px-25 border-2 m-3 bg-white/20 backdrop-blur-md shadow-lg rounded-lg" key={index}>{feature}</p>
                         ))}
                     </div>
                 </div>
