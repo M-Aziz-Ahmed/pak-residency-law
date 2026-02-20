@@ -12,22 +12,43 @@ const modes = ['citizen', 'lawyer','admin']
                         <button onClick={()=>setLoginMode(mode)} className="bg-green-300 p-2 rounded text-black">{mode}</button>
                     ))}
                 </div>
+                
                 <div className="form-body text-black pb-3 mt-4">
+                    <div className="img"><img src="/navlogo.png" alt="Logo" className="w-16 h-16 mx-auto my-4" /></div>
+
                     {loginMode === 'citizen' &&(
                         <>
-                        citizen Login Fields
-                        </>
+                        <h2 className="text-2xl font-bold text-center">Citizen Portal Login</h2>
+                        <p className="text-center mb-6">Plz login to access your account.</p>
+ <p>Authorized Name</p>
+    <input type="text" placeholder="Username" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
+    <p>Authorized Password</p>
+    <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded-md mb-4" /> 
+    <button className="bg-green-700 text-white p-2 rounded-md w-full">Enter Citizen Portal</button>                        </>
                     )}
+
                     {loginMode === 'lawyer'&&(
                         <>
-                        Lawyer Login Fields
+                        <h2 className="text-2xl font-bold text-center">Lawyer Portal Login</h2>
+                        <p className="text-center mb-6">Plz login to access your account.</p>
+    <p>Authorized Name</p>
+    <input type="text" placeholder="Username" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
+    <p>Authorized Password</p>
+    <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded-md mb-4" /> 
+    <button className="bg-green-700 text-white p-2 rounded-md w-full">Enter Lawyer Portal</button>
                         </>
                     )}
-                    {/* {loginMode === 'admin'&&(
+                     {loginMode === 'admin'&&(
                         <>
-                        Admin Login Fields
-                        </>
-                    )} */}
+                        <h2 className="text-2xl font-bold text-center">Admin Portal Login</h2>
+                        <p className="text-center mb-6">Plz login to access your account.</p>
+    <p>Authorized Name</p>  
+    <input type="text" placeholder="Username" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
+    <p>Authorized Password</p>
+    <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded-md mb-4" /> 
+    <button className="bg-green-700 text-white p-2 rounded-md w-full">Enter Admin Portal</button>                        </>
+                    )} 
+                    
                 </div>
 
 
