@@ -9,8 +9,8 @@ const Navbar = () => {
         {name:'Scan Deed', link:'/portfollio/ScanDeed'},
         {name:'Law Search', link:'/portfollio/Law-search'},
         {name:'Land Advisors', link:'/portfollio/Lawyers'},
-        {name:'Citizen Login', link:'/portfollio/citizenlogin'},
-        {name:'Lawyer Login', link:'/portfollio/Lawyerlogin'},
+        // {name:'Citizen Login', link:'/portfollio/citizenlogin'},
+        // {name:'Lawyer Login', link:'/portfollio/Lawyerlogin'},
     ]
     const path = usePathname()
     return (
@@ -29,7 +29,7 @@ const Navbar = () => {
                     ))}
                 </div>
                 <div className="">
-                    <button className="bg-green-700 p-2 rounded-full text-xl font-semibold text-white px-10 "><a href=""></a>Portal Login</button>
+                    <Link href="/login"><button className="bg-green-700 p-2 rounded-full text-xl font-semibold text-white px-10 ">Portal Login</button></Link >
                     
                 </div>
             </div>
