@@ -4,12 +4,34 @@ import { useState } from "react";
 export default function Page() {
 const [loginMode, setLoginMode] = useState('citizen')
 const modes = ['citizen', 'lawyer','admin']
+const [values,setValues]=useState({
+        name:"",
+        email:"",
+        password:"",
+        role:loginMode,
+        
+    });
+    const handleSubmit=async (e)=>{
+    e.preventDefault();
+        try {
+        const res = fetch('/api/user',{
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(values)
+        });
+        console.log(res);
+    } catch (error) {
+        console.log(error);
+    }
+    }
     return (
         <div className="h-[100vh] w-[100vw] bg-white/80 flex justify-center items-center">
             <div className="form bg-white p-5 rounded-lg shadow-lg">
                 <div className="div form-header flex w-70 p-2 px-5 gap-3 justify-around bg-black rounded">
                     {modes.map((mode)=>(
-                        <button onClick={()=>setLoginMode(mode)} className="bg-green-300 p-2 rounded text-black">{mode}</button>
+                        <button key={mode} onClick={()=>setLoginMode(mode)} className="bg-green-300 p-2 rounded text-black">{mode}</button>
                     ))}
                 </div>
                 

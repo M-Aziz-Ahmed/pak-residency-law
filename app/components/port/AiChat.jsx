@@ -15,9 +15,9 @@ export default function AiChat() {
                   <p className="ml-110">Land grab issues in Pakistan.</p>
                 </div>
                 <div className="footer flex items-center justify-center mt-10">
-                 <searchbar className="w-full">
+                 <div className="w-full">
                   <input type="text" placeholder="Poochain(Ask) anything about property laws" className="w-full p-2 border border-gray-300 rounded"/>
-                 </searchbar>
+                 </div>
                  <button className="bg-green-700 text-white p-2 rounded ml-2">Send</button>
                 </div>
             </div>
