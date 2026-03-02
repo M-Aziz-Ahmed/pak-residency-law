@@ -14,7 +14,7 @@ const [values,setValues]=useState({
     const handleSubmit=async (e)=>{
     e.preventDefault();
         try {
-        const res = fetch('/api/user',{
+        const res = fetch('/api/user/login',{
             method:'POST',
             headers:{
                 'Content-Type':'application/json'
@@ -43,10 +43,10 @@ const [values,setValues]=useState({
                         <h2 className="text-2xl font-bold text-center">Citizen Portal Login</h2>
                         <p className="text-center mb-6">Plz login to access your account.</p>
  <p>Authorized Name</p>
-    <input type="text" placeholder="Username" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
+    <input type="text" placeholder="Username"onChange={(e)=> setValues({...values, name:e.target.value})} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
     <p>Authorized Password</p>
-    <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded-md mb-4" /> 
-    <button className="bg-green-700 text-white p-2 rounded-md w-full">Enter Citizen Portal</button>                        </>
+    <input type="password" placeholder="Password"onChange={(e)=> setValues({...values, password:e.target.value})}  className="w-full p-2 border border-gray-300 rounded-md mb-4" /> 
+    <button className="bg-green-700 text-white p-2 rounded-md w-full" onClick={handleSubmit}>Enter Citizen Portal</button>                        </>
                     )}
 
                     {loginMode === 'lawyer'&&(
@@ -72,9 +72,6 @@ const [values,setValues]=useState({
                     )} 
                     
                 </div>
-
-
-
             </div>
         </div>
     );
