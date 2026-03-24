@@ -16,6 +16,9 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
     },
+    verified:{
+        type: Boolean,
+    }
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
