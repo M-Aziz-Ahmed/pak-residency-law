@@ -9,6 +9,9 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    profilePic:{
+        type:String
+    },
     password: {
         type: String,
         required: true
@@ -16,6 +19,22 @@ const userSchema = mongoose.Schema({
     role: {
         type: String,
     },
+    verified:{
+        type: Boolean,
+    },
+    // Lawyer verification documents
+    cnicFront: {
+        type: String
+    },
+    cnicBack: {
+        type: String
+    },
+    licenceFront: {
+        type: String
+    },
+    licenceBack: {
+        type: String
+    }
 });
 
 export default mongoose.models.User || mongoose.model("User", userSchema);
