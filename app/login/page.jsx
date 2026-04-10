@@ -54,9 +54,7 @@ export default function Page() {
                             </div>
                         </div>
                         <h1 className="text-2xl font-bold text-white mb-1">
-                            {loginMode === 'citizen' && 'Citizen Portal'}
-                            {loginMode === 'lawyer' && 'Lawyer Portal'}
-                            {loginMode === 'admin' && 'Admin Portal'}
+                            Pak Residency Law
                         </h1>
                         <p className="text-green-100 text-sm">Welcome back! Please login to continue</p>
                     </div>
@@ -65,21 +63,6 @@ export default function Page() {
                     <div className="p-8">
                         
                         {/* Mode Tabs */}
-                        <div className="flex gap-2 bg-gray-100 p-1.5 rounded-xl mb-6">
-                            {modes.map((mode) => (
-                                <button
-                                    key={mode}
-                                    onClick={() => setLoginMode(mode)}
-                                    className={`flex-1 py-2.5 rounded-lg text-sm font-medium capitalize transition-all duration-300 ${
-                                        loginMode === mode
-                                            ? 'bg-green-500 text-white shadow-lg scale-105'
-                                            : 'text-gray-600 hover:bg-white hover:text-gray-800'
-                                    }`}
-                                >
-                                    {mode}
-                                </button>
-                            ))}
-                        </div>
 
                         {/* Error Message */}
                         {error && (
