@@ -1,30 +1,34 @@
 'use client'
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
+    const router = useRouter()
     const [loginMode, setLoginMode] = useState('citizen')
     const modes = ['citizen', 'lawyer', 'admin']
-    const [values, setValues] = useState({
-        name: "",
-        email: "",
-        password: "",
-        role: loginMode,
+    const [values, setValues] = useState({ email: "", password: "" });
+    const [error, setError] = useState("");
 
-    });
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setError(""); // Clear previous errors
         try {
-            const res = fetch('/api/user/login', {
+            const res = await fetch('/api/user/login', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ ...values, role: loginMode })
             });
-            console.log(res);
+            const data = await res.json()
+            console.log(data)
+            if (res.ok) {
+                router.push('/')
+            } else {
+                setError(data.message || "Login failed")
+            }
         } catch (error) {
             console.log(error);
+            setError("An error occurred. Please try again.")
         }
     }
     return (
@@ -37,43 +41,38 @@ export default function Page() {
                 </div>
 
                 <div className="form-body text-black pb-3 mt-4">
-                    <div className="img"><img src="/navlogo.png" alt="Logo" className="w-16 h-16 mx-auto my-4" /></div>
+                    <div className="img">
+                        <img src="/navlogo.png" alt="Logo" className="w-16 h-16 mx-auto my-4" />
+                    </div>
+
+                    {error && <p className="text-red-500 text-sm mb-4 text-center font-semibold">{error}</p>}
 
                     {loginMode === 'citizen' && (
                         <>
                             <h2 className="text-2xl font-bold text-center">Citizen Portal Login</h2>
                             <p className="text-center mb-6">Plz login to access your account.</p>
-                            <p>Authorized Name</p>
-                            <input type="text" placeholder="Username" onChange={(e) => setValues({ ...values, name: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            <p>Authorized Password</p>
-                            <input type="password" placeholder="Password" onChange={(e) => setValues({ ...values, password: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
                         </>
                     )}
-
                     {loginMode === 'lawyer' && (
                         <>
                             <h2 className="text-2xl font-bold text-center">Lawyer Portal Login</h2>
                             <p className="text-center mb-6">Plz login to access your account.</p>
-                            <p>Authorized Name</p>
-                            <input type="text" placeholder="Username" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            <p>Authorized Password</p>
-                            <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
                         </>
                     )}
                     {loginMode === 'admin' && (
                         <>
                             <h2 className="text-2xl font-bold text-center">Admin Portal Login</h2>
                             <p className="text-center mb-6">Plz login to access your account.</p>
-                            <p>Authorized Name</p>
-                            <input type="text" placeholder="Username" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            <p>Authorized Password</p>
-                            <input type="password" placeholder="Password" className="w-full p-2 border border-gray-300 rounded-md mb-4" />
                         </>
                     )}
 
-                    <p>create a new account ?.. <Link href="./signin">SignIN</Link></p>
-                    <button className="bg-green-700 text-white p-2 rounded-md w-full">Enter {loginMode} Portal</button>
+                    <p>Authorized Email</p>
+                    <input type="text" placeholder="example@gmail.com" onChange={(e) => setValues({ ...values, email: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
+                    <p>Authorized Password</p>
+                    <input type="password" placeholder="Password" onChange={(e) => setValues({ ...values, password: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
 
+                    <p>create a new account ?.. <Link href="./signin">SignIN</Link></p>
+                    <button className="bg-green-700 text-white p-2 rounded-md w-full" onClick={handleSubmit}>Enter {loginMode} Portal</button>
                 </div>
             </div>
         </div>

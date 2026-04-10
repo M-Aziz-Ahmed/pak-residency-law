@@ -9,6 +9,9 @@ const userSchema = mongoose.Schema({
         type: String,
         required: true,
     },
+    profilePic:{
+        type:String
+    },
     password: {
         type: String,
         required: true
@@ -18,6 +21,19 @@ const userSchema = mongoose.Schema({
     },
     verified:{
         type: Boolean,
+    },
+    // Lawyer verification documents
+    cnicFront: {
+        type: String
+    },
+    cnicBack: {
+        type: String
+    },
+    licenceFront: {
+        type: String
+    },
+    licenceBack: {
+        type: String
     }
 });
 

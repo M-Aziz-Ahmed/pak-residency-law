@@ -1,23 +1,36 @@
 'use client'
 import Link from "next/link";
 import { useState } from "react";
+import useMe from "../hooks/me";
+import { useRouter } from "next/router";
+import { redirect } from "next/dist/server/api-utils";
 
 export default function Page() {
+    const { user } = useMe()
     const [signInMode, setSignInMode] = useState('citizen')
     const modes = ['citizen', 'lawyer']
     const [values, setValues] = useState({
         name: "",
         email: "",
         password: "",
-        role: '',
-        verified: '',
+        role: 'citizen',
+        verified: 'true'
 
     });
-    const changedValues = ()=>{
-        setValues({...values, role:signInMode, verified:signInMode === 'lawyer' ? false : true})
+    console.log(values)
+
+    const handleMode = (mode)=>{
+        setSignInMode(mode)
+        if(mode === 'citizen'){
+        setValues({...values, verified: true})
+        setValues({...values, role:'citizen'})
+        }
+        else{
+        setValues({...values, verified: false})
+        setValues({...values, role:'lawyer'})
+        }
     }
     const handleSubmit = async (e) => {
-        changedValues()
         try {
             const res = fetch('/api/user/signin', {
                 method: 'POST',
@@ -27,16 +40,18 @@ export default function Page() {
                 body: JSON.stringify(values)
             });
             console.log(res);
+           redirect('/')
         } catch (error) {
             console.log(error);
         }
     }
+    console.log(user)
     return (
         <div className="h-[100vh] w-[100vw] bg-white/80 flex justify-center items-center">
             <div className="form bg-white p-5 rounded-lg shadow-lg">
                 <div className="div form-header flex w-70 p-2 px-5 gap-3 justify-around bg-black rounded">
                     {modes.map((mode) => (
-                        <button key={mode} onClick={() => setSignInMode(mode)} className="bg-green-300 p-2 rounded text-black">{mode}</button>
+                        <button key={mode} onClick={() => handleMode(mode)} className="bg-green-300 p-2 rounded text-black">{mode}</button>
                     ))}
                 </div>
 
@@ -45,7 +60,7 @@ export default function Page() {
 
                     {signInMode === 'citizen' && (
                         <>
-                            <h2 className="text-2xl font-bold text-center">Citizen Portal Login</h2>
+                            <h2 className="text-2xl font-bold text-center">Citizen Portal Login </h2>
                             <p className="text-center mb-6">Plz login to access your account.</p>
 
                             <div className="">
