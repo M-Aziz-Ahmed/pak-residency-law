@@ -48,7 +48,7 @@ export default function TopSection() {
             />
             
             {/* Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-green-900/40 to-black/60" />
+           <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-green-900/40 to-black/60" />
 
             {/* Content */}
             <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
@@ -95,7 +95,7 @@ export default function TopSection() {
 
                     {/* Right Section - Features Card */}
                     <div className="lg:ml-auto">
-                        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 shadow-2xl">
+                        <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-10 shadow-2xl w-[500px]">
                             <h2 className="text-2xl font-bold text-white mb-6">Secure Your Assets</h2>
                             <div className="space-y-4">
                                 {features.map((feature, index) => (

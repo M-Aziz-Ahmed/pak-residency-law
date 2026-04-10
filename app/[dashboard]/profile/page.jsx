@@ -1,4 +1,5 @@
 "use client"
+import Navbar from "@/app/components/Navbar";
 import useMe from "@/app/hooks/me";
 import { useState } from "react";
 
@@ -183,6 +184,8 @@ export default function Page() {
     const isCitizen = user.role === 'citizen'
 
     return (
+        <>
+        <Navbar/>
         <div className="min-h-screen bg-gradient-to-br from-green-50 via-white to-green-50 py-8 px-4">
             <div className="max-w-3xl mx-auto">
                 <div className="bg-white rounded-2xl shadow-xl p-8">
@@ -529,5 +532,6 @@ export default function Page() {
                 </div>
             </div>
         </div>
+        </>
     );
 }

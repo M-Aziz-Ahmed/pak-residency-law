@@ -125,7 +125,7 @@ const Navbar = () => {
                                             <ul className="py-2">
                                                 <li>
                                                     <Link
-                                                        href={user.role}
+                                                        href={`/${user.role}`}
                                                         onClick={() => setIsExpanded(false)}
                                                         className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
                                                     >
@@ -137,7 +137,7 @@ const Navbar = () => {
                                                 </li>
                                                 <li>
                                                     <Link
-                                                        href={`${user.role}/profile`}
+                                                        href={`/${user.role}/profile`}
                                                         onClick={() => setIsExpanded(false)}
                                                         className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-green-50 hover:text-green-600 transition-colors"
                                                     >
