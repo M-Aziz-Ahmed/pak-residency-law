@@ -1,118 +1,256 @@
 'use client'
-import Link from "next/link";
 import { useState } from "react";
-import useMe from "../hooks/me";
-import { useRouter } from "next/router";
-import { redirect } from "next/dist/server/api-utils";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
-    const { user } = useMe()
+    const router = useRouter()
     const [signInMode, setSignInMode] = useState('citizen')
     const modes = ['citizen', 'lawyer']
+    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(false);
+
     const [values, setValues] = useState({
         name: "",
         email: "",
         password: "",
+        confirmPassword: "",
         role: 'citizen',
-        verified: 'true'
-
+        verified: true
     });
-    console.log(values)
 
-    const handleMode = (mode)=>{
+    const handleMode = (mode) => {
         setSignInMode(mode)
-        if(mode === 'citizen'){
-        setValues({...values, verified: true})
-        setValues({...values, role:'citizen'})
-        }
-        else{
-        setValues({...values, verified: false})
-        setValues({...values, role:'lawyer'})
+        if (mode === 'citizen') {
+            setValues({ ...values, verified: true, role: 'citizen' })
+        } else {
+            setValues({ ...values, verified: false, role: 'lawyer' })
         }
     }
+
     const handleSubmit = async (e) => {
+        e.preventDefault();
+        setError("");
+
+        // Validation
+        if (values.password !== values.confirmPassword) {
+            setError("Passwords do not match");
+            return;
+        }
+
+        if (values.password.length < 6) {
+            setError("Password must be at least 6 characters");
+            return;
+        }
+
+        setLoading(true);
+
         try {
-            const res = fetch('/api/user/signin', {
+            const res = await fetch('/api/user/signin', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(values)
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: values.name,
+                    email: values.email,
+                    password: values.password,
+                    role: values.role,
+                    verified: values.verified
+                })
             });
-            console.log(res);
-           redirect('/')
+            const data = await res.json()
+
+            if (res.ok) {
+                router.push('/')
+            } else {
+                setError(data.message || "Sign up failed")
+            }
         } catch (error) {
             console.log(error);
+            setError("An error occurred. Please try again.")
+        } finally {
+            setLoading(false);
         }
     }
-    console.log(user)
+
     return (
-        <div className="h-[100vh] w-[100vw] bg-white/80 flex justify-center items-center">
-            <div className="form bg-white p-5 rounded-lg shadow-lg">
-                <div className="div form-header flex w-70 p-2 px-5 gap-3 justify-around bg-black rounded">
-                    {modes.map((mode) => (
-                        <button key={mode} onClick={() => handleMode(mode)} className="bg-green-300 p-2 rounded text-black">{mode}</button>
-                    ))}
+        <div className="min-h-screen w-full bg-gradient-to-br from-green-50 via-white to-green-50 flex items-center justify-center p-4">
+            <div className="w-full max-w-md">
+                {/* Card */}
+                <div className="bg-white rounded-2xl shadow-2xl overflow-hidden">
+
+                    {/* Header with gradient */}
+                    <div className="bg-gradient-to-r from-green-600 to-green-500 p-6 text-center">
+                        <div className="flex justify-center mb-3">
+                            <div className="w-20 h-20 bg-white rounded-full p-2 shadow-lg">
+                                <img src="/navlogo.png" alt="Logo" className="w-full h-full object-contain" />
+                            </div>
+                        </div>
+                        <h1 className="text-2xl font-bold text-white mb-1">
+                            {signInMode === 'citizen' ? 'Citizen Registration' : 'Lawyer Registration'}
+                        </h1>
+                        <p className="text-green-100 text-sm">Create your account to get started</p>
+                    </div>
+
+                    {/* Body */}
+                    <div className="p-8">
+
+                        {/* Mode Tabs */}
+                        <div className="flex gap-2 bg-gray-100 p-1.5 rounded-xl mb-6">
+                            {modes.map((mode) => (
+                                <button
+                                    key={mode}
+                                    onClick={() => handleMode(mode)}
+                                    className={`flex-1 py-2.5 rounded-lg text-sm font-medium capitalize transition-all duration-300 ${
+                                        signInMode === mode
+                                            ? 'bg-green-500 text-white shadow-lg scale-105'
+                                            : 'text-gray-600 hover:bg-white hover:text-gray-800'
+                                    }`}
+                                >
+                                    {mode}
+                                </button>
+                            ))}
+                        </div>
+
+                        {/* Error Message */}
+                        {error && (
+                            <div className="mb-5 p-4 bg-red-50 border-l-4 border-red-500 rounded-r-lg">
+                                <div className="flex items-center">
+                                    <svg className="w-5 h-5 text-red-500 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                                    </svg>
+                                    <p className="text-red-700 text-sm font-medium">{error}</p>
+                                </div>
+                            </div>
+                        )}
+
+                        {/* Form */}
+                        <form onSubmit={handleSubmit} className="space-y-4">
+
+                            {/* Full Name Input */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Full Name
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                        </svg>
+                                    </div>
+                                    <input
+                                        type="text"
+                                        placeholder="Your full name"
+                                        value={values.name}
+                                        onChange={(e) => setValues({ ...values, name: e.target.value })}
+                                        className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Email Input */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Email Address
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                                        </svg>
+                                    </div>
+                                    <input
+                                        type="email"
+                                        placeholder="example@gmail.com"
+                                        value={values.email}
+                                        onChange={(e) => setValues({ ...values, email: e.target.value })}
+                                        className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Password Input */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Password
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                        </svg>
+                                    </div>
+                                    <input
+                                        type="password"
+                                        placeholder="Create a password"
+                                        value={values.password}
+                                        onChange={(e) => setValues({ ...values, password: e.target.value })}
+                                        className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Confirm Password Input */}
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-2">
+                                    Confirm Password
+                                </label>
+                                <div className="relative">
+                                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                        <svg className="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <input
+                                        type="password"
+                                        placeholder="Confirm your password"
+                                        value={values.confirmPassword}
+                                        onChange={(e) => setValues({ ...values, confirmPassword: e.target.value })}
+                                        className="w-full pl-10 pr-4 py-3 rounded-lg bg-gray-50 border border-gray-300 text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition-all"
+                                        required
+                                    />
+                                </div>
+                            </div>
+
+                            {/* Submit Button */}
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full py-3 rounded-lg bg-gradient-to-r from-green-600 to-green-500 hover:from-green-700 hover:to-green-600 text-white font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none mt-6"
+                            >
+                                {loading ? (
+                                    <span className="flex items-center justify-center">
+                                        <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" fill="none" viewBox="0 0 24 24">
+                                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                        </svg>
+                                        Creating account...
+                                    </span>
+                                ) : (
+                                    `Create ${signInMode.charAt(0).toUpperCase() + signInMode.slice(1)} Account`
+                                )}
+                            </button>
+
+                        </form>
+
+                        {/* Footer */}
+                        <div className="mt-6 text-center">
+                            <p className="text-sm text-gray-600">
+                                Already have an account?{' '}
+                                <a href="/login" className="text-green-600 hover:text-green-700 font-semibold hover:underline transition-colors">
+                                    Login here
+                                </a>
+                            </p>
+                        </div>
+
+                    </div>
                 </div>
 
-                <div className="form-body text-black pb-3 mt-4">
-                    <div className="img"><img src="/navlogo.png" alt="Logo" className="w-16 h-16 mx-auto my-4" /></div>
-
-                    {signInMode === 'citizen' && (
-                        <>
-                            <h2 className="text-2xl font-bold text-center">Citizen Portal Login </h2>
-                            <p className="text-center mb-6">Plz login to access your account.</p>
-
-                            <div className="">
-                                <p>Full Name</p>
-                                <input type="text" placeholder="Your Full Name" onChange={(e) => setValues({ ...values, name: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-                            <div className="">
-                                <p>Email Address</p>
-                                <input type="text" placeholder="example@gmail.com" onChange={(e) => setValues({ ...values, email: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-
-                            <div className="">
-                                <p>Password</p>
-                                <input type="password" placeholder="Password" onChange={(e) => setValues({ ...values, password: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-                            <div className="">
-                                <p>Confirm Password</p>
-                                <input type="password" placeholder="Password" onChange={(e) => setValues({ ...values, password: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-
-                        </>
-                    )}
-
-                    {signInMode === 'lawyer' && (
-                        <>
-                        <h2 className="text-2xl font-bold text-center">Lawyer Portal Login</h2>
-                            <p className="text-center mb-6">Plz login to access your account.</p>
-
-                            <div className="">
-                                <p>Full Name</p>
-                                <input type="text" placeholder="Your Full Name" onChange={(e) => setValues({ ...values, name: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-                            <div className="">
-                                <p>Email Address</p>
-                                <input type="text" placeholder="example@gmail.com" onChange={(e) => setValues({ ...values, email: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-
-                            <div className="">
-                                <p>Password</p>
-                                <input type="password" placeholder="Password" onChange={(e) => setValues({ ...values, password: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-                            <div className="">
-                                <p>Confirm Password</p>
-                                <input type="password" placeholder="Password" onChange={(e) => setValues({ ...values, password: e.target.value })} className="w-full p-2 border border-gray-300 rounded-md mb-4" />
-                            </div>
-                        </>
-                    )}
-
-                    <p>Already have an account ?.. <Link href="./login">Login</Link></p>
-                    <button className="bg-green-700 text-white p-2 rounded-md w-full" onClick={handleSubmit}>Enter {signInMode} Portal</button>
-
-                </div>
+                {/* Bottom text */}
+                <p className="text-center text-sm text-gray-500 mt-6">
+                    Pakistan Residency Law Portal © 2026
+                </p>
             </div>
         </div>
     );
