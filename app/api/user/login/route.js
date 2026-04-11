@@ -59,12 +59,7 @@ export async function POST(req) {
       email: user.email,
       role: user.role, 
       verified: user.verified
-    }), {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'lax',
-      maxAge: 60 * 60 * 24 * 7 // 7 days
-    });
+    }));
 
     console.log("Login successful");
     return NextResponse.json({

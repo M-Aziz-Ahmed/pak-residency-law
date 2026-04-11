@@ -2,9 +2,7 @@
 const nextConfig = {
   /* config options here */
   reactCompiler: true,
- experimental: {
-  serverComponentsExternalPackages: [...]
-},
+  serverExternalPackages: ['mongoose', 'bcrypt'],
 };
 
 export default nextConfig;
